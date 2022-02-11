@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :books, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
+  has_many :user_rooms, dependent: :destroy
+  has_many :chats, dependent: :destroy
 
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :followings, through: :relationships, source: :followed
@@ -29,7 +31,7 @@ class User < ApplicationRecord
   def is_followed_by?(user)
     reverse_of_relationships.find_by(follower_id: user.id).present?
   end
-  
+
   def self.looks(search, word)
     if search == "perfect_match"
       @user = User.where("name LIKE?", "#{word}")

@@ -1,0 +1,29 @@
+<h1><%= @user.name %>さんとのチャット</h1>
+
+<table class="message table">
+  <% @chats.each do |chat| %>
+    <% if chat.user_id == current_user.id %>
+    <tbody>
+      <tr>
+        <th>
+          <p><%= chat.message %></p>
+        </th>
+        <th></th>
+      </tr>
+    <% else %>
+      <tr>
+        <th></th>
+        <th>
+          <p><%= chat.message %></p>
+        </th>
+      </tr>
+    </tbody>
+    <% end %>
+  <% end %>
+</table>
+
+<%= form_with model: @chat do |f| %>
+  <%= f.text_field :message %>
+  <%= f.hidden_field :room_id %>
+  <%= f.submit "送信" %>
+<% end %>
